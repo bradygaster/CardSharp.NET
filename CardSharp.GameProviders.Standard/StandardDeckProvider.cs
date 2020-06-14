@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using CardSharp.Abstractions;
 
@@ -6,7 +7,8 @@ namespace CardSharp.GameProviders.Standard
 {
     public class StandardDeckProvider : 
         IDeckProvider<StandardDeck, StandardCard>,
-        IDealer<StandardDeck, StandardCard>
+        IDealer<StandardDeck, StandardCard>,
+        IShuffle<StandardDeck, StandardCard>
     {
         public StandardDeck Deck { get; set; }
 
@@ -37,6 +39,24 @@ namespace CardSharp.GameProviders.Standard
             var card = deck.Cards.First();
             deck.Cards.RemoveAt(0);
             return card;
+        }
+
+        public StandardDeck Shuffle(StandardDeck deck)
+        {
+            var list = new LinkedList<StandardCard>(deck.Cards);
+            deck.Cards.Clear();
+
+            var rnd = new Random();
+
+            while (list.Count > 0)
+            {
+                var id = rnd.Next(0, list.Count);
+                var card = list.ElementAt(id);
+                deck.Cards.Add(card);
+                list.Remove(card);
+            }
+
+            return deck;
         }
     }
 }
