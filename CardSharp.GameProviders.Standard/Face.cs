@@ -1,5 +1,8 @@
+using System;
+
 namespace CardSharp.GameProviders.Standard
 {
+    [Flags]
     public enum Face : int
     {
         LowJoker = 0,

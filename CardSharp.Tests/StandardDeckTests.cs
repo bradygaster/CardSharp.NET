@@ -119,12 +119,20 @@ namespace CardSharp.Tests
             {
                 var c = StandardDeckProvider.Deal(deck);
                 Assert.NotNull(c);
-                Console.WriteLine($"{count}: {Enum.GetName(typeof(Face), c.Face)} of {Enum.GetName(typeof(Suit), c.Suit)}");
                 count += 1;
             }
 
             var card = StandardDeckProvider.Deal(deck);
             Assert.Null(card);
+        }
+
+        [Fact]
+        public void CanQueryForCardsInAPile()
+        {
+            var deck = StandardDeckProvider.Create();
+            var hand = deck.Cards.Take(14);
+            var aces = hand.Where(x => ((Face)x.Face).HasFlag(Face.Ace)).ToList();
+            Assert.True(aces.Count > 0);
         }
     }
 }

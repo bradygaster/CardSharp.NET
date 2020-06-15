@@ -1,3 +1,4 @@
+using System;
 using CardSharp.Abstractions;
 
 namespace CardSharp.GameProviders.Standard
@@ -17,6 +18,11 @@ namespace CardSharp.GameProviders.Standard
         public bool Equals(StandardCard card)
         {
             return this.Suit.Equals(card.Suit) && this.Face.Equals(card.Face);
+        }
+
+        public override string ToString()
+        {
+            return $"{Enum.GetName(typeof(Face), Face)} of {Enum.GetName(typeof(Suit), Suit)}";
         }
     }
 }
