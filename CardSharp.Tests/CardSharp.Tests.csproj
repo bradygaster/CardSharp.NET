@@ -14,6 +14,8 @@
     <ProjectReference Include="..\CardSharp.Abstractions\CardSharp.Abstractions.csproj" />
     <ProjectReference Include="..\CardSharp.GameProviders.Standard\CardSharp.GameProviders.Standard.csproj" />
     <ProjectReference Include="..\CardSharp.GameProviders.Adventure\CardSharp.GameProviders.Adventure.csproj" />
+    <ProjectReference Include="..\CardSharp.GameProviders.Poker\CardSharp.GameProviders.Poker.csproj" />
+    <ProjectReference Include="..\CardSharp.GameProviders.HiLo\CardSharp.GameProviders.HiLo.csproj" />
   </ItemGroup>
 
 </Project>

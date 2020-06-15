@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\CardSharp.Abstractions\CardSharp.Abstractions.csproj" />
+    <ProjectReference Include="..\CardSharp.GameProviders.Standard\CardSharp.GameProviders.Standard.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+</Project>

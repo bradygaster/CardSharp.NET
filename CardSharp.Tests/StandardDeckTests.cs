@@ -9,25 +9,12 @@ namespace CardSharp.Tests
     public class StandardDeckTests
     {
         const int STANDARD_DECK_CARD_COUNT_WITH_JOKERS = 53;
-        public static StandardDeckProvider DeckProvider { get; set; } = new StandardDeckProvider();
-
-        private static StandardDeck CreateStandardDeck()
-        {
-            var deck = DeckProvider.Create();
-            return deck;
-        }
-
-        private IDealer<StandardDeck, StandardCard> GetStandardDealer()
-        {
-            return DeckProvider;
-        }
-
-        public StandardDeckShuffler Shuffler { get; set; } = new StandardDeckShuffler();
+        public static StandardDeckProvider StandardDeckProvider { get; set; } = new StandardDeckProvider();
 
         [Fact]
         public void StandardDeckProviderCreatesADeck()
         {
-            StandardDeck deck = CreateStandardDeck();
+            StandardDeck deck = StandardDeckProvider.Create();
             Assert.NotNull(deck);
             Assert.True(deck.Cards.Any());
             Assert.True(deck.Cards.Count == 54); // 52 + jokers
@@ -36,8 +23,8 @@ namespace CardSharp.Tests
         [Fact]
         public void TwoUnshuffledStandardDecksAreEqual()
         {
-            var decka = CreateStandardDeck();
-            var deckb = CreateStandardDeck();
+            var decka = StandardDeckProvider.Create();
+            var deckb = StandardDeckProvider.Create();
             Assert.True(decka.Equals(deckb));
         }
 
@@ -68,25 +55,24 @@ namespace CardSharp.Tests
         [Fact]
         public void ShuffledDecksAndUnshuffledDecksArentTheSame()
         {
-            var unshuffledDeck = CreateStandardDeck();
-            var shuffledDeck = CreateStandardDeck();
+            var unshuffledDeck = StandardDeckProvider.Create();
+            var shuffledDeck = StandardDeckProvider.Create();
             Assert.True(unshuffledDeck.Equals(shuffledDeck));
-            shuffledDeck = new StandardDeckShuffler().Shuffle(shuffledDeck);
+            shuffledDeck = StandardDeckProvider.Shuffle(shuffledDeck);
             Assert.False(unshuffledDeck.Equals(shuffledDeck));
         }
 
         [Fact]
         public void ShuffledDecksDontComeOutTheSame()
         {
-            var shuffledDeck = CreateStandardDeck();
-            var reallyShuffledDeck = CreateStandardDeck();
+            var shuffledDeck = StandardDeckProvider.Create();
+            var reallyShuffledDeck = StandardDeckProvider.Create();
             Assert.True(reallyShuffledDeck.Equals(shuffledDeck));
-            shuffledDeck = new StandardDeckShuffler().Shuffle(shuffledDeck);
+            shuffledDeck = StandardDeckProvider.Shuffle(shuffledDeck);
             Assert.False(reallyShuffledDeck.Equals(shuffledDeck));
-            var shuffler = new StandardDeckShuffler();
             for (int i = 0; i < 10; i++)
             {
-                reallyShuffledDeck = shuffler.Shuffle(reallyShuffledDeck);
+                reallyShuffledDeck = StandardDeckProvider.Shuffle(reallyShuffledDeck);
             }
             Assert.False(reallyShuffledDeck.Equals(shuffledDeck));
         }
@@ -94,13 +80,12 @@ namespace CardSharp.Tests
         [Fact]
         public void ShuffledDecksHaveTheSameCounts()
         {
-            var shuffledDeck = CreateStandardDeck();
-            var reallyShuffledDeck = CreateStandardDeck();
-            shuffledDeck = new StandardDeckShuffler().Shuffle(shuffledDeck);
-            var shuffler = new StandardDeckShuffler();
+            var shuffledDeck = StandardDeckProvider.Create();
+            var reallyShuffledDeck = StandardDeckProvider.Create();
+            shuffledDeck = StandardDeckProvider.Shuffle(shuffledDeck);
             for (int i = 0; i < 10; i++)
             {
-                reallyShuffledDeck = shuffler.Shuffle(reallyShuffledDeck);
+                reallyShuffledDeck = StandardDeckProvider.Shuffle(reallyShuffledDeck);
             }
             Assert.True(shuffledDeck.Cards.Count.Equals(reallyShuffledDeck.Cards.Count));
         }
@@ -108,41 +93,46 @@ namespace CardSharp.Tests
         [Fact]
         public void DealerCanDealACard()
         {
-            var deck = CreateStandardDeck();
-            var dealer = GetStandardDealer();
-            var card = dealer.Deal(deck);
+            var deck = StandardDeckProvider.Create();
+            var card = StandardDeckProvider.Deal(deck);
             Assert.NotNull(card);
         }
 
         [Fact]
         public void DealerCanDealACardFromAShuffledDeck()
         {
-            var deck = CreateStandardDeck();
-            var dealer = GetStandardDealer();
-            deck = Shuffler.Shuffle(deck);
-            deck = Shuffler.Shuffle(deck);
-            deck = Shuffler.Shuffle(deck);
-            deck = Shuffler.Shuffle(deck);
-            var card = dealer.Deal(deck);
+            var deck = StandardDeckProvider.Create();
+            deck = StandardDeckProvider.Shuffle(deck);
+            deck = StandardDeckProvider.Shuffle(deck);
+            deck = StandardDeckProvider.Shuffle(deck);
+            deck = StandardDeckProvider.Shuffle(deck);
+            var card = StandardDeckProvider.Deal(deck);
             Assert.NotNull(card);
         }
 
         [Fact]
         public void DealerCanDealEachCardUntilNoMoreCards()
         {
-            var deck = CreateStandardDeck();
-            var dealer = GetStandardDealer();
+            var deck = StandardDeckProvider.Create();
             var count = 0;
             while(count <= STANDARD_DECK_CARD_COUNT_WITH_JOKERS)
             {
-                var c = dealer.Deal(deck);
+                var c = StandardDeckProvider.Deal(deck);
                 Assert.NotNull(c);
-                Console.WriteLine($"{count}: {Enum.GetName(typeof(Face), c.Face)} of {Enum.GetName(typeof(Suit), c.Suit)}");
                 count += 1;
             }
 
-            var card = dealer.Deal(deck);
+            var card = StandardDeckProvider.Deal(deck);
             Assert.Null(card);
+        }
+
+        [Fact]
+        public void CanQueryForCardsInAPile()
+        {
+            var deck = StandardDeckProvider.Create();
+            var hand = deck.Cards.Take(14);
+            var aces = hand.Where(x => ((Face)x.Face).HasFlag(Face.Ace)).ToList();
+            Assert.True(aces.Count > 0);
         }
     }
 }
