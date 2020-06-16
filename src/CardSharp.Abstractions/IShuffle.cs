@@ -4,6 +4,6 @@ namespace CardSharp.Abstractions
         where TCard : ICard
         where TDeck : IDeck<TCard>
     {
-        TDeck Shuffle(TDeck deck);
+        IShuffle<TDeck,TCard> Shuffle(TDeck deck);
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using CardSharp.GameProviders.Standard;
+using FluentAssertions;
 using Xunit;
 
 namespace CardSharp.Tests
@@ -16,7 +17,7 @@ namespace CardSharp.Tests
                 .WithCard(Face.Five, Suit.Spades)
                 .WithCard(Face.Five, Suit.Hearts);
 
-            Assert.Equal(2, deck.Cards.Count);
+            2.Should().Be(deck.Cards.Count);
         }
 
         [Fact]
@@ -41,7 +42,7 @@ namespace CardSharp.Tests
         }
 
         [Fact]
-        public void HandWithOUTAPairIsntIdentifiedAsHavingAPair()
+        public void HandWithOUTAPairIsNOTIdentifiedAsHavingAPair()
         {
             var deck = new StandardDeck()
                 .WithCard(Face.Two, Suit.Hearts)
@@ -59,11 +60,11 @@ namespace CardSharp.Tests
                 if(deck.Cards.FindAll(x => x.Face == (int)face).Count == 2)
                 {
                     isFound = true;
-                    Assert.False(isFound);
+                    isFound.Should().Be(false);
                 }
             }
 
-            Assert.False(isFound);
+            isFound.Should().Be(false);
         }
 
         [Fact]
@@ -77,6 +78,8 @@ namespace CardSharp.Tests
                 && hand.Any(x => ((Face)x.Face).HasFlag(Face.Three))
                 && hand.Any(x => ((Face)x.Face).HasFlag(Face.Four))
                 && hand.Any(x => ((Face)x.Face).HasFlag(Face.Five));
+
+            isStraight.Should().Be(true);
         }
     }
 }

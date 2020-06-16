@@ -41,22 +41,22 @@ namespace CardSharp.GameProviders.Standard
             return card;
         }
 
-        public StandardDeck Shuffle(StandardDeck deck)
+        public IShuffle<StandardDeck, StandardCard> Shuffle(StandardDeck deck)
         {
-            var list = new LinkedList<StandardCard>(deck.Cards);
+            var temp = new LinkedList<StandardCard>(deck.Cards);
             deck.Cards.Clear();
 
             var rnd = new Random();
 
-            while (list.Count > 0)
+            while (temp.Count > 0)
             {
-                var id = rnd.Next(0, list.Count);
-                var card = list.ElementAt(id);
+                var id = rnd.Next(0, temp.Count);
+                var card = temp.ElementAt(id);
                 deck.Cards.Add(card);
-                list.Remove(card);
+                temp.Remove(card);
             }
 
-            return deck;
+            return this;
         }
     }
 }
