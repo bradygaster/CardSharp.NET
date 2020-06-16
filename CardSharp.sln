@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardSharp.Abstractions", "CardSharp.Abstractions\CardSharp.Abstractions.csproj", "{4DF3D390-E084-4A45-95FC-8C3E9F99FA41}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardSharp.Abstractions", "src\CardSharp.Abstractions\CardSharp.Abstractions.csproj", "{4DF3D390-E084-4A45-95FC-8C3E9F99FA41}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardSharp.Tests", "CardSharp.Tests\CardSharp.Tests.csproj", "{3F73CB8F-9B1D-4DF2-A33D-CABAF9CA5CB7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardSharp.Tests", "tests\CardSharp.Tests\CardSharp.Tests.csproj", "{3F73CB8F-9B1D-4DF2-A33D-CABAF9CA5CB7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardSharp.GameProviders.Standard", "CardSharp.GameProviders.Standard\CardSharp.GameProviders.Standard.csproj", "{76AFED40-2C85-4B2F-8453-763B602B17FD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardSharp.GameProviders.Standard", "src\CardSharp.GameProviders.Standard\CardSharp.GameProviders.Standard.csproj", "{76AFED40-2C85-4B2F-8453-763B602B17FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardSharp.GameProviders.Adventure", "CardSharp.GameProviders.Adventure\CardSharp.GameProviders.Adventure.csproj", "{6C47DB37-7440-43D6-A3F3-97C22A607F9B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardSharp.GameProviders.Adventure", "src\CardSharp.GameProviders.Adventure\CardSharp.GameProviders.Adventure.csproj", "{6C47DB37-7440-43D6-A3F3-97C22A607F9B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardSharp.GameProviders.Poker", "CardSharp.GameProviders.Poker\CardSharp.GameProviders.Poker.csproj", "{CA1824A1-4F3B-497D-A8D0-052FBEFF35E7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardSharp.GameProviders.Poker", "src\CardSharp.GameProviders.Poker\CardSharp.GameProviders.Poker.csproj", "{CA1824A1-4F3B-497D-A8D0-052FBEFF35E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardSharp.GameProviders.HiLo", "CardSharp.GameProviders.HiLo\CardSharp.GameProviders.HiLo.csproj", "{05D9ED90-1C71-4BEF-87EB-725F0B15B212}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardSharp.GameProviders.HiLo", "src\CardSharp.GameProviders.HiLo\CardSharp.GameProviders.HiLo.csproj", "{05D9ED90-1C71-4BEF-87EB-725F0B15B212}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
