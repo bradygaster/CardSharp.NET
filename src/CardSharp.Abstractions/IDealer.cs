@@ -1,3 +1,5 @@
+using System;
+
 namespace CardSharp.Abstractions
 {
     public interface IDealer<TDeck,TCard> 
@@ -5,5 +7,9 @@ namespace CardSharp.Abstractions
         where TCard : ICard
     {
         TCard Deal(TDeck deck);
+    }
+
+    public class DealerRests : EventArgs
+    {
     }
 }
