@@ -2,7 +2,7 @@ using CardSharp.GameProviders.Standard;
 
 namespace CardSharp.GameProviders.HiLo
 {
-    public class HiLoDealer : StandardDeckProvider
+    public class HiLoDealer : StandardDeckDealer
     {
     }
 }

@@ -9,13 +9,16 @@ namespace CardSharp.Tests
 {
     public class HiLoTests
     {
-        void Setup(Action<HiLoPlayer, HiLoPlayer, ActivePile, StandardDeckProvider, StandardDeck> then)
+        StandardDeckDealer dealer = new StandardDeckDealer();
+        StandardDeckProvider provider = new StandardDeckProvider();
+        
+        void Setup(Action<HiLoPlayer, HiLoPlayer, ActivePile, HiLoDealer, StandardDeck> then)
         {
             var player1 = new HiLoPlayer { Name = "Naomi" };
             var player2 = new HiLoPlayer { Name = "Bruce" };
             var activePile = new ActivePile();
             var dealer = new HiLoDealer();
-            var deck = dealer.Create();
+            var deck = provider.Create();
             deck.Cards.RemoveAll(x => x.Suit == (int)Suit.None); // remove the jokers
             for (int i = 0; i < 10; i++) dealer.Shuffle(deck);
 
@@ -48,12 +51,9 @@ namespace CardSharp.Tests
         }
 
         [Fact]
-        public void DealerWillFlipCardsUntilNoMoreExist()
+        public void GameManagerFiresGameReadyEventWhenGameIsReady()
         {
-            Setup((player1, player2, active, dealer, deck) => 
-            {
-                active.Cards.Count.Should().Be(1);
-            });
+            
         }
     }
 }

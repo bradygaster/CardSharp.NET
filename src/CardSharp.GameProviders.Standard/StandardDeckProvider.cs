@@ -5,10 +5,7 @@ using CardSharp.Abstractions;
 
 namespace CardSharp.GameProviders.Standard
 {
-    public class StandardDeckProvider : 
-        IDeckProvider<StandardDeck, StandardCard>,
-        IDealer<StandardDeck, StandardCard>,
-        IShuffle<StandardDeck, StandardCard>
+    public class StandardDeckProvider : IDeckProvider<StandardDeck, StandardCard>
     {
         public StandardDeck Deck { get; set; }
 
@@ -31,32 +28,6 @@ namespace CardSharp.GameProviders.Standard
             Deck.Cards.Add(new StandardCard(Suit.None, Face.LowJoker));
 
             return Deck;
-        }
-
-        public StandardCard Deal(StandardDeck deck)
-        {
-            if(!deck.Cards.Any()) return null;
-            var card = deck.Cards.First();
-            deck.Cards.RemoveAt(0);
-            return card;
-        }
-
-        public IShuffle<StandardDeck, StandardCard> Shuffle(StandardDeck deck)
-        {
-            var temp = new LinkedList<StandardCard>(deck.Cards);
-            deck.Cards.Clear();
-
-            var rnd = new Random();
-
-            while (temp.Count > 0)
-            {
-                var id = rnd.Next(0, temp.Count);
-                var card = temp.ElementAt(id);
-                deck.Cards.Add(card);
-                temp.Remove(card);
-            }
-
-            return this;
         }
     }
 }

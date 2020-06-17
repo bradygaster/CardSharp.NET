@@ -55,7 +55,7 @@ namespace CardSharp.Tests
         {
             StandardDeckProvider.Create()
                 .Should().NotBeSameAs(
-                    StandardDeckProvider.Shuffle(StandardDeckProvider.Create())
+                    new StandardDeckDealer().Shuffle(StandardDeckProvider.Create())
                 );
         }
 
@@ -64,10 +64,10 @@ namespace CardSharp.Tests
         {
             var shuffledDeck = StandardDeckProvider.Create();
             var reallyShuffledDeck = StandardDeckProvider.Create();
-            StandardDeckProvider.Shuffle(shuffledDeck);
+            new StandardDeckDealer().Shuffle(shuffledDeck);
             for (int i = 0; i < 10; i++)
             {
-                StandardDeckProvider.Shuffle(reallyShuffledDeck);
+                new StandardDeckDealer().Shuffle(reallyShuffledDeck);
             }
             Assert.True(shuffledDeck.Cards.Count.Equals(reallyShuffledDeck.Cards.Count));
         }
@@ -76,7 +76,7 @@ namespace CardSharp.Tests
         public void DealerCanDealACard()
         {
             var deck = StandardDeckProvider.Create();
-            var card = StandardDeckProvider.Deal(deck);
+            var card = new StandardDeckDealer().Deal(deck);
             Assert.NotNull(card);
         }
 
@@ -84,11 +84,11 @@ namespace CardSharp.Tests
         public void DealerCanDealACardFromAShuffledDeck()
         {
             var deck = StandardDeckProvider.Create();
-            StandardDeckProvider.Shuffle(deck);
-            StandardDeckProvider.Shuffle(deck);
-            StandardDeckProvider.Shuffle(deck);
-            StandardDeckProvider.Shuffle(deck);
-            var card = StandardDeckProvider.Deal(deck);
+            new StandardDeckDealer().Shuffle(deck);
+            new StandardDeckDealer().Shuffle(deck);
+            new StandardDeckDealer().Shuffle(deck);
+            new StandardDeckDealer().Shuffle(deck);
+            var card = new StandardDeckDealer().Deal(deck);
             Assert.NotNull(card);
         }
 
@@ -99,12 +99,12 @@ namespace CardSharp.Tests
             var count = 0;
             while(count <= STANDARD_DECK_CARD_COUNT_WITH_JOKERS)
             {
-                var c = StandardDeckProvider.Deal(deck);
+                var c = new StandardDeckDealer().Deal(deck);
                 Assert.NotNull(c);
                 count += 1;
             }
 
-            var card = StandardDeckProvider.Deal(deck);
+            var card = new StandardDeckDealer().Deal(deck);
             Assert.Null(card);
         }
 
