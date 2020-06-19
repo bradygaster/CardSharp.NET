@@ -6,14 +6,16 @@ namespace CardSharp.Abstractions
 {
     public interface IGameManager
     {
-        IGame Setup();
-        Task Start();
+        IGame Game { get; }
+        List<IPlayer> PlayersWaiting { get; }
+        List<IPlayer> PlayersInGame { get; }
         Task QueuePlayer(IPlayer player);
         Task EnlistPlayer(IPlayer player);
         Task Matchmake();
         event EventHandler<GameReadyArgs> GameReady;
         event EventHandler<GameReadyForPlayersArgs> GameReadyForPlayers;
         event EventHandler<PlayersChosenEventArgs> PlayersChosen;
+        Task Setup();
     }
 
     public class GameReadyForPlayersArgs : EventArgs

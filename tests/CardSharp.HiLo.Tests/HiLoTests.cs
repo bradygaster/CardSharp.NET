@@ -4,6 +4,7 @@ using CardSharp.GameProviders.Standard;
 using Xunit;
 using FluentAssertions;
 using CardSharp.Abstractions;
+using Bogus;
 
 namespace CardSharp.Tests.HiLo
 {
@@ -40,10 +41,53 @@ namespace CardSharp.Tests.HiLo
             then?.Invoke(player1, player2, activePile, deck);
         }
 
+        class Player
+        {
+            public string Name { get; set; }
+        }
+
+        void QueueSamplePlayers(int playerCount = 2)
+        {
+            new Faker<Player>()
+                    .RuleFor(x => x.Name, (f, g) => f.Name.FirstName())
+                    .FinishWith((f, p) => {
+                        GameManager.QueuePlayer(new HiLoPlayer { Name = p.Name });
+                        Console.WriteLine($"Player queued: {p.Name}");
+                    })
+                    .Generate(playerCount);
+        }
+
         [Fact]
         public void GameManagerCanManageGame()
         {
-            GameManager.Setup().Should().NotBeNull();
+            GameManager.Game.Should().NotBeNull();
+        }
+
+        [Fact]
+        public void GameManagerCanQueuePlayers()
+        {
+            QueueSamplePlayers(2);
+            GameManager.PlayersWaiting.Should().HaveCountGreaterOrEqualTo(2);
+        }
+
+        [Fact]
+        public void MatchmakingQueueOfTwoLeavesNoneInQueue()
+        {
+            QueueSamplePlayers(2);
+            GameManager.Matchmake();
+            GameManager.PlayersWaiting.Should().HaveCount(0);
+            GameManager.PlayersInGame.Should().HaveCount(2);
+        }
+
+        [Fact]
+        public void MatchmakingResultsInPlayerChosenEvent()
+        {
+            QueueSamplePlayers(2);
+            var ev = Assert.Raises<PlayersChosenEventArgs>(
+                x => GameManager.PlayersChosen += x,
+                x => GameManager.PlayersChosen -= x,
+                () => GameManager.Matchmake()
+            );
         }
 
         [Fact]

@@ -3,21 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CardSharp.Abstractions;
+using CardSharp.GameProviders.Standard;
 
 namespace CardSharp.GameProviders.HiLo
 {
     public class HiLoGameManager : IGameManager
     {
-        public HiLoGameManager(IGame game)
+        public HiLoGameManager(IGame game, 
+            StandardDeckDealer dealer, 
+            StandardDeckProvider provider)
         {
             Game = game;
-            EnlistedPlayers = new List<IPlayer>();
-            QueuedPlayers = new List<IPlayer>();
+            Dealer = dealer;
+            Provider = provider;
+            PlayersWaiting = new List<IPlayer>();
+            PlayersInGame = new List<IPlayer>();
         }
 
         public IGame Game { get; }
-        public List<IPlayer> EnlistedPlayers { get; }
-        public List<IPlayer> QueuedPlayers { get; }
+        public StandardDeckDealer Dealer { get; }
+        public StandardDeckProvider Provider { get; }
+        public List<IPlayer> PlayersWaiting { get; }
+        public List<IPlayer> PlayersInGame { get; }
 
         public event EventHandler<GameReadyArgs> GameReady;
         public event EventHandler<GameReadyForPlayersArgs> GameReadyForPlayers;
@@ -25,20 +32,20 @@ namespace CardSharp.GameProviders.HiLo
 
         public Task EnlistPlayer(IPlayer player)
         {
-            if(!EnlistedPlayers.Any(x => x.Name == player.Name))
-                EnlistedPlayers.Add(player);
+            if(!PlayersInGame.Any(x => x.Name == player.Name))
+                PlayersInGame.Add(player);
             return Task.CompletedTask;
         }
 
         public Task Matchmake()
         {
-            if(QueuedPlayers.Count >= 2)
+            if(PlayersWaiting.Count >= 2)
             {
-                EnlistedPlayers.Clear();
-                EnlistedPlayers.AddRange(QueuedPlayers.Take(2));
-                QueuedPlayers.RemoveRange(0, 2);
+                PlayersInGame.Clear();
+                PlayersInGame.AddRange(PlayersWaiting.Take(2));
+                PlayersWaiting.RemoveRange(0, 2);
 
-                PlayersChosen?.Invoke(this, new PlayersChosenEventArgs(EnlistedPlayers));
+                PlayersChosen?.Invoke(this, new PlayersChosenEventArgs(PlayersInGame));
             }
 
             return Task.CompletedTask;
@@ -46,21 +53,14 @@ namespace CardSharp.GameProviders.HiLo
 
         public Task QueuePlayer(IPlayer player)
         {
-            if(!QueuedPlayers.Any(x => x.Name == player.Name))
-                QueuedPlayers.Add(player);
+            if(!PlayersWaiting.Any(x => x.Name == player.Name))
+                PlayersWaiting.Add(player);
             return Task.CompletedTask;
         }
 
-        public IGame Setup()
+        public Task Setup()
         {
-            Console.WriteLine("Setup");
-            return Game;
-        }
-
-        public Task Start()
-        {
-            Console.WriteLine("Start");
-            return Task.CompletedTask;
+            throw new NotImplementedException();
         }
     }
 }
