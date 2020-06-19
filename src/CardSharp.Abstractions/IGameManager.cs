@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 
 namespace CardSharp.Abstractions
 {
-    public interface IGameManager
+    public interface IGameManager<TGame> where TGame : IGame
     {
-        IGame Game { get; }
+        TGame Game { get; }
         List<IPlayer> PlayersWaiting { get; }
         List<IPlayer> PlayersInGame { get; }
         Task QueuePlayer(IPlayer player);

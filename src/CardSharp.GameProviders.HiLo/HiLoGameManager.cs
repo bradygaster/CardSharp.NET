@@ -7,9 +7,9 @@ using CardSharp.GameProviders.Standard;
 
 namespace CardSharp.GameProviders.HiLo
 {
-    public class HiLoGameManager : IGameManager
+    public class HiLoGameManager : IGameManager<HiLoGame>
     {
-        public HiLoGameManager(IGame game, 
+        public HiLoGameManager(HiLoGame game, 
             StandardDeckDealer dealer, 
             StandardDeckProvider provider)
         {
@@ -20,7 +20,7 @@ namespace CardSharp.GameProviders.HiLo
             PlayersInGame = new List<IPlayer>();
         }
 
-        public IGame Game { get; }
+        public HiLoGame Game { get; }
         public StandardDeckDealer Dealer { get; }
         public StandardDeckProvider Provider { get; }
         public List<IPlayer> PlayersWaiting { get; }

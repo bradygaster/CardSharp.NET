@@ -20,8 +20,8 @@ namespace CardSharp.HiLo.Tests
         {
             services.AddTransient<StandardDeckDealer>();
             services.AddTransient<StandardDeckProvider>();
-            services.AddSingleton<IGame, HiLoGame>();
-            services.AddSingleton<IGameManager, HiLoGameManager>();
+            services.AddSingleton<HiLoGame>();
+            services.AddSingleton<HiLoGameManager>();
         }
 
         protected override IHostBuilder CreateHostBuilder(AssemblyName assemblyName) =>

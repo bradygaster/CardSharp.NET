@@ -12,13 +12,13 @@ namespace CardSharp.Tests.HiLo
     {
         StandardDeckDealer Dealer;
         StandardDeckProvider Provider;
-        IGame Game { get; }
-        IGameManager GameManager { get; }
+        HiLoGame Game { get; }
+        HiLoGameManager GameManager { get; }
 
         public HiLoTests(StandardDeckDealer dealer, 
             StandardDeckProvider provider, 
-            IGame game, 
-            IGameManager gameManaer)
+            HiLoGame game, 
+            HiLoGameManager gameManaer)
         {
             Dealer = dealer;
             Provider = provider;
@@ -82,11 +82,13 @@ namespace CardSharp.Tests.HiLo
         [Fact]
         public void MatchmakingResultsInPlayerChosenEvent()
         {
-            QueueSamplePlayers(2);
             var ev = Assert.Raises<PlayersChosenEventArgs>(
                 x => GameManager.PlayersChosen += x,
                 x => GameManager.PlayersChosen -= x,
-                () => GameManager.Matchmake()
+                () => {
+                    QueueSamplePlayers(2);
+                    GameManager.Matchmake();
+                }
             );
         }
 
