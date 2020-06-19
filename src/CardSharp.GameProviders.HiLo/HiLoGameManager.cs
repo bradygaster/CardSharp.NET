@@ -25,6 +25,7 @@ namespace CardSharp.GameProviders.HiLo
         public StandardDeckProvider Provider { get; }
         public List<IPlayer> PlayersWaiting { get; }
         public List<IPlayer> PlayersInGame { get; }
+        public StandardDeck Deck { get; private set; }
 
         public event EventHandler<GameReadyArgs> GameReady;
         public event EventHandler<GameReadyForPlayersArgs> GameReadyForPlayers;
@@ -34,6 +35,7 @@ namespace CardSharp.GameProviders.HiLo
         {
             if(!PlayersInGame.Any(x => x.Name == player.Name))
                 PlayersInGame.Add(player);
+
             return Task.CompletedTask;
         }
 
@@ -55,12 +57,20 @@ namespace CardSharp.GameProviders.HiLo
         {
             if(!PlayersWaiting.Any(x => x.Name == player.Name))
                 PlayersWaiting.Add(player);
+
             return Task.CompletedTask;
         }
 
         public Task Setup()
         {
-            throw new NotImplementedException();
+            Game.ActivePile.Cards.Clear();
+            Deck = Provider.Create();
+            Deck.Cards.RemoveAll(x => x.Suit == (int)Suit.None); // remove the jokers
+            for (int i = 0; i < 10; i++) Dealer.Shuffle(Deck);
+            Dealer.Deal(Deck).To(Game.ActivePile);
+            GameReadyForPlayers?.Invoke(this, new GameReadyForPlayersArgs());
+            
+            return Task.CompletedTask;
         }
     }
 }

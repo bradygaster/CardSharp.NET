@@ -9,5 +9,6 @@ namespace CardSharp.GameProviders.HiLo
         public string Name => "HiLo";
         public bool InProgress { get; set; }
         public DateTime LastStarted { get; set; }
+        public ActivePile ActivePile { get; set; } = new ActivePile();
     }
 }

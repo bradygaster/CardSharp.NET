@@ -26,21 +26,6 @@ namespace CardSharp.Tests.HiLo
             GameManager = gameManaer;
         }
 
-        void Setup(Action<HiLoPlayer, HiLoPlayer, ActivePile, StandardDeck> then)
-        {
-            var player1 = new HiLoPlayer { Name = "Naomi" };
-            var player2 = new HiLoPlayer { Name = "Bruce" };
-            var activePile = new ActivePile();
-            var deck = Provider.Create();
-            deck.Cards.RemoveAll(x => x.Suit == (int)Suit.None); // remove the jokers
-            for (int i = 0; i < 10; i++) Dealer.Shuffle(deck);
-
-            // deal the first card
-            Dealer.Deal(deck).To(activePile);
-
-            then?.Invoke(player1, player2, activePile, deck);
-        }
-
         class Player
         {
             public string Name { get; set; }
@@ -95,23 +80,22 @@ namespace CardSharp.Tests.HiLo
         [Fact]
         public void DealerCanSetTheTable()
         {
-            Setup((player1, player2, active, deck) => 
-            {
-                active.Cards.Count.Should().Be(1);
-            });
+            GameManager.Setup();
+            GameManager.Game.ActivePile.Cards.Count.Should().Be(1);
         }
 
         [Fact]
         public void PlayersRespondWhenGivenControl()
         {
-            Setup((player1, player2, active, deck) => 
-            {
-                var ev = Assert.Raises<PlayerReceivedControlArgs>(
-                    x => player1.PlayerReceivedControl += x,
-                    x => player1.PlayerReceivedControl -= x,
-                    () => player1.ReceiveControl()
+            var ev = Assert.Raises<PlayerReceivedControlArgs>(
+                    x => GameManager.PlayersInGame[0].PlayerReceivedControl += x,
+                    x => GameManager.PlayersInGame[0].PlayerReceivedControl -= x,
+                    () => 
+                    {
+                        GameManager.Setup();
+                        GameManager.PlayersInGame[0].ReceiveControl();
+                    }
                 );
-            });
         }
     }
 }
