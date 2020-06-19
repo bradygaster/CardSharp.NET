@@ -8,9 +8,17 @@ namespace CardSharp.GameProviders.HiLo
     {
         public string Name { get; set; }
         public event EventHandler<PlayerReceivedControlArgs> PlayerReceivedControl;
+        public event EventHandler<PlayerReadyArgs> PlayerReady;
+
         public virtual Task ReceiveControl()
         {
             PlayerReceivedControl?.Invoke(this, new PlayerReceivedControlArgs());
+            return Task.CompletedTask;
+        }
+
+        public virtual Task ReadyPlayer()
+        {
+            PlayerReady?.Invoke(this, new PlayerReadyArgs());
             return Task.CompletedTask;
         }
     }

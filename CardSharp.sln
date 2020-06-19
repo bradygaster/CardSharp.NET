@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardSharp.GameProviders.Pok
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardSharp.GameProviders.HiLo", "src\CardSharp.GameProviders.HiLo\CardSharp.GameProviders.HiLo.csproj", "{05D9ED90-1C71-4BEF-87EB-725F0B15B212}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{E87DC993-3ACD-4D40-A20C-2A21BF40CEAB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardSharp.HiLo.Tests", "tests\CardSharp.HiLo.Tests\CardSharp.HiLo.Tests.csproj", "{81472E84-35C4-491A-AEA2-9CC9240E0471}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -100,5 +104,20 @@ Global
 		{05D9ED90-1C71-4BEF-87EB-725F0B15B212}.Release|x64.Build.0 = Release|Any CPU
 		{05D9ED90-1C71-4BEF-87EB-725F0B15B212}.Release|x86.ActiveCfg = Release|Any CPU
 		{05D9ED90-1C71-4BEF-87EB-725F0B15B212}.Release|x86.Build.0 = Release|Any CPU
+		{81472E84-35C4-491A-AEA2-9CC9240E0471}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81472E84-35C4-491A-AEA2-9CC9240E0471}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81472E84-35C4-491A-AEA2-9CC9240E0471}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{81472E84-35C4-491A-AEA2-9CC9240E0471}.Debug|x64.Build.0 = Debug|Any CPU
+		{81472E84-35C4-491A-AEA2-9CC9240E0471}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{81472E84-35C4-491A-AEA2-9CC9240E0471}.Debug|x86.Build.0 = Debug|Any CPU
+		{81472E84-35C4-491A-AEA2-9CC9240E0471}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81472E84-35C4-491A-AEA2-9CC9240E0471}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81472E84-35C4-491A-AEA2-9CC9240E0471}.Release|x64.ActiveCfg = Release|Any CPU
+		{81472E84-35C4-491A-AEA2-9CC9240E0471}.Release|x64.Build.0 = Release|Any CPU
+		{81472E84-35C4-491A-AEA2-9CC9240E0471}.Release|x86.ActiveCfg = Release|Any CPU
+		{81472E84-35C4-491A-AEA2-9CC9240E0471}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{81472E84-35C4-491A-AEA2-9CC9240E0471} = {E87DC993-3ACD-4D40-A20C-2A21BF40CEAB}
 	EndGlobalSection
 EndGlobal
